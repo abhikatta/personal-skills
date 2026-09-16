@@ -9,7 +9,7 @@ description: >-
 
 Turn one day's git commits into short, plain-language pointers ready to paste into Slack and daily timesheets.
 
-Requires only `git`. The `gh` CLI and its `daylog` alias are optional shortcuts — never block on them.
+Requires only `git`.
 
 ## Step 1: Get the date
 
