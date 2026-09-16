@@ -70,8 +70,9 @@ to `docs/journals/<today>/<your-git-username>.md` under a `## HH:MM` heading
 (create folders as needed). Record reasons and decisions, not just changes:
 why the old approach failed, how a bug was fixed (cause → fix), and decision
 changes as old → new + reason without deleting the old entry. Do not commit
-the journal file with code changes — at the end of the day commit journal
-files separately as `journal: <username> <YYYY-MM-DD>`.
+the journal file with code changes — at the end of the day, show the journal
+files with the commit command (`git commit -m "journal: <username> <YYYY-MM-DD>"`)
+and commit only on explicit confirmation.
 ```
 
 Requires the `daily-journal` skill installed. The per-author files mean teammates never merge-conflict.

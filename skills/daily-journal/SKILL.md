@@ -65,13 +65,15 @@ Team (`--dir` pointing at the repo's `docs/journals`):
 - Later runs append a new timestamped section (morning/evening never clobber each other; teammates never share a file, so no merge conflicts).
 - Re-running to fix an entry: use `replace` instead of `append` (idempotent rewrite). Decisions themselves stay append-only per Step 3.4.
 
-### Step 5: Team mode — commit the journal
+### Step 5: Team mode — propose the journal commit, never make it
 
-Commit journal files separately from code, never mixed into a code commit:
+Show the user the journal file and the exact commit command, then stop:
 
 ```bash
 git add docs/journals/<date>/<slug>.md && git commit -m "journal: <slug> <date>"
 ```
+
+Commit only if the user explicitly asks. They verify the file contents first; journal files are never mixed into code commits.
 
 ### Step 6: Report back
 
