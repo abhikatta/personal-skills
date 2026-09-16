@@ -19,7 +19,7 @@ Requires only `git`. The `gh` CLI and its `daylog` alias are optional shortcuts 
 
 ## Step 2: Get the commits
 
-Run in the target repo (default: current working directory). Try in this order, using the first one that works:
+Run in the target repo (default: current working directory). First confirm you are in the right repo (`git rev-parse --show-toplevel`). If the agent's workspace differs from the target repo, pass the path explicitly with `git -C <path>` / `gh daylog` run from that directory. Try in this order, using the first one that works:
 
 **Option A — the `gh` alias (if `gh` exists and the alias is configured):**
 
