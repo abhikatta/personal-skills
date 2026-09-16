@@ -19,15 +19,7 @@ Requires only `git`. The `gh` CLI and its `daylog` alias are optional shortcuts 
 
 ## Step 2: Get the commits
 
-Run in the target repo (default: current working directory). First confirm you are in the right repo (`git rev-parse --show-toplevel`). If the agent's workspace differs from the target repo, pass the path explicitly with `git -C <path>` / `gh daylog` run from that directory. Try in this order, using the first one that works:
-
-**Option A — the `gh` alias (if `gh` exists and the alias is configured):**
-
-```bash
-gh daylog YYYY/MM/DD
-```
-
-**Option B — plain git fallback (always works, no setup needed):**
+Run in the target repo (default: current working directory). First confirm you are in the right repo (`git rev-parse --show-toplevel`). If the agent's workspace differs from the target repo, run git with an explicit path (`git -C <path> log ...`).
 
 ```bash
 git --no-pager log --author="$(git config user.name)" --since="<date> 00:00:00" --until="<date> 23:59:59" --pretty=format:'%h %s (%an, %ad)' --date=short
@@ -35,8 +27,7 @@ git --no-pager log --author="$(git config user.name)" --since="<date> 00:00:00" 
 
 Handle failures as follows:
 
-- `gh: command not found` or alias missing (check with `gh alias list`) → silently use Option B. Optionally offer the one-command alias setup from the README, but never require it.
-- Empty `user.name` → retry Option B with `$(git config user.email)` instead. If both are empty, drop the `--author` flag and warn the user the list may include others' commits.
+- Empty `user.name` → retry with `$(git config user.email)` instead. If both are empty, drop the `--author` flag and warn the user the list may include others' commits.
 - `fatal: not a git repository` → stop and ask the user which repo to summarize.
 - Empty output (exit 0, no commits) → say no commits were found for that date and stop. Suggest checking the date, the repo, or whether commits used a different author identity. Do not invent work.
 

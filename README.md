@@ -8,8 +8,7 @@ Works with any model: Claude Code, OpenCode, Antigravity, local Llama, etc. The 
 
 ## Requirements
 
-- **Required:** `git` (any recent version).
-- **Optional:** [GitHub CLI (`gh`)](https://cli.github.com/) + the `daylog` alias below. Without them the skill falls back to plain `git log` automatically — nothing breaks.
+- `git` (any recent version). That's it.
 
 ## Install
 
@@ -38,18 +37,6 @@ mkdir -p .claude/skills && ln -s ~/personal-skills/skills/daylog .claude/skills/
 mkdir -p .opencode/skills && ln -s ~/personal-skills/skills/daylog .opencode/skills/daylog
 ```
 
-## `gh daylog` alias (optional)
-
-So `gh daylog YYYY/MM/DD` lists your commits for a day:
-
-```bash
-gh alias set daylog --shell - <<'EOF'
-git --no-pager log --author="$(git config user.name)" --since="$1 00:00:00" --until="$1 23:59:59"
-EOF
-```
-
-Verify with `gh alias list`. To overwrite an old definition, add `--clobber`. The skill works without this (plain `git log` fallback).
-
 ## Usage
 
 Talk to your agent in any repo:
@@ -58,7 +45,7 @@ Talk to your agent in any repo:
 - _"Summarize what I did today for Slack"_
 - _"Give me my timesheet update for yesterday"_
 
-The agent fetches that day's commits (via `gh daylog` or plain `git log` if `gh`/the alias is missing) and returns plain-language bullet pointers — short and concise, ticket IDs and feature names kept, no extra fluff — ready to paste into Slack or your timesheet.
+The agent fetches that day's commits with plain `git log` and returns plain-language bullet pointers — short and concise, ticket IDs and feature names kept, no extra fluff — ready to paste into Slack or your timesheet.
 
 ## Layout
 
