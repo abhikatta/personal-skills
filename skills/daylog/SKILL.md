@@ -29,14 +29,28 @@ Handle failures as follows:
 
 - Empty `user.name` → retry with `$(git config user.email)` instead. If both are empty, drop the `--author` flag and warn the user the list may include others' commits.
 - `fatal: not a git repository` → stop and ask the user which repo to summarize.
-- Empty output (exit 0, no commits) → say no commits were found for that date and stop. Suggest checking the date, the repo, or whether commits used a different author identity. Do not invent work.
+- Empty output (exit 0, no commits) → check the journal below before stopping. If neither exists, say no work was found for that date and stop. Suggest checking the date, the repo, or whether commits used a different author identity. Do not invent work.
+
+### Step 2b: Enrich with the day's journal (if it exists)
+
+Terse commit messages (`feat: add X`, `wip`) hide the reasoning. If the repo has team journals, read the user's own file for that date:
+
+```bash
+cat <repo>/docs/journals/<YYYY-MM-DD>/<author-slug>.md
+```
+
+(author slug = `git config user.name` slugified: lowercase, spaces → hyphens. Date in `YYYY-MM-DD`.)
+
+- Commits anchor **what landed**; the journal fills gaps terse messages leave (what a `wip` belonged to, scope that isn't obvious from subjects). Merge into one pointer per work item — never list the same work twice.
+- No commits but journal exists → summarize from the journal, don't stop.
+- Teammates' files: read only if the user asked for a team daylog; default to the user's own file.
 
 ## Step 3: Summarize
 
 Summarize the commits as bullet pointers following these rules:
 
 1. One pointer per meaningful piece of work. Merge micro-commits (`wip`, `fix typo`, `lint`) into the work they belong to.
-2. Plain, non-technical language a manager can understand. Say what was done and why, not how. Avoid file names, function names, and stack traces unless they are the point.
+2. Plain, non-technical language a manager or client can understand. Say what was done and its outcome, not how. Include the _why_ only when a non-technical reader would care — user-facing impact, incident cause, scope or timeline decisions (e.g. "switched checkout validation to server-side after direct API calls bypassed client rules"). Internal reasoning (why zustand over useContext, refactor motives) stays in the journal, not the daylog. Avoid file names, function names, and stack traces unless they are the point.
 3. Short and concise, but keep ticket IDs, PR numbers, and feature/component names (e.g. `PROJ-123`, `login page`, `payments API`).
 4. Active voice, past tense. Each pointer is one line, max two.
 5. No header, no greeting, no explanation. Output only the pointers so the user can copy-paste directly.
